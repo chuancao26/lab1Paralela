@@ -4,7 +4,7 @@
 using namespace std;
 using namespace std::chrono;
 
-#define MAX 1600
+#define MAX 1200
 
 int A[MAX][MAX], B[MAX][MAX], Y[MAX][MAX];
 
