@@ -5,6 +5,7 @@ using namespace std;
 using namespace std::chrono;
 
 #define MAX 1600
+#define BLOCK_SIZE 160
 
 int A[MAX][MAX], B[MAX][MAX], Y[MAX][MAX];
 
@@ -19,6 +20,7 @@ void print(int Y[MAX][MAX])
     cout << endl;
   }
 }
+
 int main()
 {
   for(int i = 0; i < MAX; i++)
@@ -30,21 +32,32 @@ int main()
       Y[i][j] = 0;
     }
   }
+  
   auto start = high_resolution_clock::now();
-
-  for(int i = 0; i < MAX; i++)
+  
+  for(int ii = 0; ii < MAX; ii += BLOCK_SIZE)
   {
-    for(int j = 0; j < MAX; j++)
+    for(int jj = 0; jj < MAX; jj += BLOCK_SIZE)
     {
-      for(int k = 0; k < MAX; k++)
+      for(int kk = 0; kk < MAX; kk += BLOCK_SIZE)  
       {
-        Y[i][j] += A[i][k] * B[k][j];
+        for(int i = ii; i < ii + BLOCK_SIZE; i++) 
+        {
+          for(int j = jj; j < jj + BLOCK_SIZE; j++)
+          {
+            for(int k = kk; k < kk + BLOCK_SIZE; k++)
+            {
+              Y[i][j] += A[i][k] * B[k][j];
+            }
+          }
+        }
       }
     }
   }
+  
   auto end = high_resolution_clock::now();
   auto time = duration_cast<milliseconds>(end - start).count();
-  cout << time << " " << MAX;
-
+  cout << time << " " << MAX << " (Block size: " << BLOCK_SIZE << ")";
+  
   return 0;
 }
