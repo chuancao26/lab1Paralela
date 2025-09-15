@@ -4,7 +4,7 @@
 using namespace std;
 using namespace std::chrono;
 
-#define MAX 1600
+#define MAX 800
 #define BLOCK_SIZE MAX/10
 
 int A[MAX][MAX], B[MAX][MAX], Y[MAX][MAX];
